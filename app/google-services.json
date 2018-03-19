@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "829099743165",
+    "firebase_url": "https://relax-c2a9b.firebaseio.com",
+    "project_id": "relax-c2a9b",
+    "storage_bucket": "relax-c2a9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:829099743165:android:acbadc597a82fcd3",
+        "android_client_info": {
+          "package_name": "com.allam.relax"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "829099743165-jkro964glogjl2ft6fu27mhf41bi0jct.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.allam.relax",
+            "certificate_hash": "6f6f8cbe1c76efa584d3b2cd1a364245469add6c"
+          }
+        },
+        {
+          "client_id": "829099743165-eh9larfqjh6720npbk0sfniv63jai9fa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLlFUGbaCqtYJ7bnxdVrBXoy4ZwKBEgKg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "829099743165-eh9larfqjh6720npbk0sfniv63jai9fa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
