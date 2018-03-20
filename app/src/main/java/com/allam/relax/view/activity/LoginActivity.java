@@ -1,4 +1,4 @@
-package com.allam.relax.activity;
+package com.allam.relax.view.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,24 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.allam.relax.R;
-import com.allam.relax.authentication.FacebookLogin;
-import com.allam.relax.interfaces.OnCompleteLogin;
-import com.allam.relax.authentication.EmailAndPasswordLogin;
-import com.allam.relax.authentication.GoogleLogin;
+import com.allam.relax.controller.authentication.FacebookLogin;
+import com.allam.relax.controller.interfaces.OnCompleteLogin;
+import com.allam.relax.controller.authentication.EmailAndPasswordLogin;
+import com.allam.relax.controller.authentication.GoogleLogin;
 import com.allam.relax.model.User;
 import com.allam.relax.utiles.Utiles;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -52,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private static final int GOOGLE_SIGN_IN_INTENT = 101;
     private ImageView mLogoImageView;
+    private User mCurrentUser;
     private LoginButton mFacebookLoginButton;
     private GoogleLogin mGoogleLogin;
     private EmailAndPasswordLogin mEmailAndPasswordLogin;
@@ -107,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (mFirebaseUser != null) {
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); // don't return to previous activity
+
                     startActivity(intent);
                     Utiles.showToast(LoginActivity.this, getString(R.string.logged_in_successfully));
                 }

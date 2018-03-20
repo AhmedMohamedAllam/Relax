@@ -1,15 +1,18 @@
 package com.allam.relax.model;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Date;
 
 /**
- * Created by Allam on 2/14/2017.
+ * Relax
+ * Created by Allam on 2/14/2017 .
  */
 
 public class User {
 
+    private static User sCurrentUser;
     private String mUid;
     private String mDisplayUid;
     private String mDisplayName;
@@ -20,30 +23,45 @@ public class User {
     private Date mSubscriptionDate;
 
 
+    private User() {
 
+    }
 
-    public User(String displayName, String email, String address, String phone) {
+    public static User getUser(){
+        if(sCurrentUser == null){
+            return sCurrentUser = new User();
+        }else{
+            return sCurrentUser;
+        }
+    }
+
+    public User init(String displayName, String email, String address, String phone) {
         mDisplayName = displayName;
         mEmail = email;
         mAddress = address;
         mPhone = phone;
         mSubscriptionDate = new Date();
+        return sCurrentUser;
     }
 
-    public User(String displayName, String email, String password, String address, String phone) {
+    public User init(String displayName, String email, String password, String address, String phone) {
         mDisplayName = displayName;
         mEmail = email;
         mPassword = password;
         mAddress = address;
         mPhone = phone;
         mSubscriptionDate = new Date();
+        return sCurrentUser;
+
     }
 
-    public User(GoogleSignInAccount googleAccount, String uid){
-        mUid = uid;
-        mDisplayName = googleAccount.getDisplayName();
-        mEmail = googleAccount.getEmail();
+    public User init(FirebaseUser firebaseUser){
+        mUid = firebaseUser.getUid();
+        mDisplayName = firebaseUser.getDisplayName();
+        mEmail = firebaseUser.getEmail();
+        mPhone = firebaseUser.getPhoneNumber();
         mSubscriptionDate = new Date();
+        return sCurrentUser;
     }
 
     public String getUid() {

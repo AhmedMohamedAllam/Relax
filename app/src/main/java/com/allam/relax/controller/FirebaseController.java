@@ -1,6 +1,6 @@
 package com.allam.relax.controller;
 
-import com.allam.relax.interfaces.OnCompleteListener;
+import com.allam.relax.controller.interfaces.OnCompleteListener;
 import com.allam.relax.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -9,7 +9,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * Created by Uranus on 18/03/2018.
+ * Relax
+ * Created by Uranus on 18/03/2018 .
  */
 
 public class FirebaseController {

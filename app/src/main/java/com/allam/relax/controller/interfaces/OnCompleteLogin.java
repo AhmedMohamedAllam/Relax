@@ -1,10 +1,7 @@
-package com.allam.relax.interfaces;
+package com.allam.relax.controller.interfaces;
 
 import com.allam.relax.model.User;
 
-/**
- * Created by Uranus on 16/03/2018.
- */
 
 public interface OnCompleteLogin {
     void onLoginSuccessfull(User user);

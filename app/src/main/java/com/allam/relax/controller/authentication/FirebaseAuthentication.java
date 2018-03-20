@@ -1,4 +1,4 @@
-package com.allam.relax.authentication;
+package com.allam.relax.controller.authentication;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.allam.relax.R;
 import com.allam.relax.controller.FirebaseController;
-import com.allam.relax.interfaces.OnCompleteLogin;
+import com.allam.relax.controller.interfaces.OnCompleteLogin;
 import com.allam.relax.model.User;
 import com.allam.relax.utiles.Utiles;
 import com.facebook.AccessToken;
@@ -23,11 +23,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 /**
- * Created by Uranus on 16/03/2018.
+ * Relax
+ * Created by Uranus on 16/03/2018 .
  */
 
 class FirebaseAuthentication {
     private FirebaseAuth mAuth;
+    private FirebaseUser mFirebaseUser;
     private Context mContext;
     private ProgressDialog mProgressDialog;
     private FirebaseController mFirebaseController;
@@ -55,7 +57,7 @@ class FirebaseAuthentication {
                     }else{
                         return;
                     }
-                    mFirebaseController.getUserFromFirebase(mUid, new com.allam.relax.interfaces.OnCompleteListener() {
+                    mFirebaseController.getUserFromFirebase(mUid, new com.allam.relax.controller.interfaces.OnCompleteListener() {
                         @Override
                         public void OnComplete(User user, String error) {
                                 completeLogin.onLoginSuccessfull(user);
@@ -76,19 +78,18 @@ class FirebaseAuthentication {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    final String mUid;
                     if (mAuth.getCurrentUser() != null){
-                        mUid = mAuth.getCurrentUser().getUid();
+                        mFirebaseUser = mAuth.getCurrentUser();
                     }else{
                         return;
                     }
-                    mFirebaseController.getUserFromFirebase(mUid, new com.allam.relax.interfaces.OnCompleteListener() {
+                    mFirebaseController.getUserFromFirebase(mFirebaseUser.getUid(), new com.allam.relax.controller.interfaces.OnCompleteListener() {
                         @Override
                         public void OnComplete(User user, String error) {
                             if (user!= null){
                                 completeLogin.onLoginSuccessfull(user);
                             }else{
-                                User newUser = new User(googleAccount, mUid);
+                                User newUser = User.getUser().init(mFirebaseUser);
                                 mFirebaseController.uploadUserToFirebase(newUser);
                                 completeLogin.onLoginSuccessfull(newUser);
                             }
@@ -114,7 +115,7 @@ class FirebaseAuthentication {
                 if (task.isSuccessful()) {
                     completeLogin.onLoginSuccessfull(user); //inform that log in operation is successfull
                     user.setUid( mAuth.getCurrentUser().getUid());
-                    mFirebaseController.uploadUserToFirebase(user, new com.allam.relax.interfaces.OnCompleteListener() {
+                    mFirebaseController.uploadUserToFirebase(user, new com.allam.relax.controller.interfaces.OnCompleteListener() {
                         @Override
                         public void OnComplete(User user, String error) {
                             if (error != null){
@@ -142,16 +143,22 @@ class FirebaseAuthentication {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         mProgressDialog.dismiss();
                         if (task.isSuccessful()) {
-                            final String mUid;
                             if (mAuth.getCurrentUser() != null){
-                                mUid = mAuth.getCurrentUser().getUid();
+                                mFirebaseUser = mAuth.getCurrentUser();
                             }else{
                                 return;
                             }
-                            mFirebaseController.getUserFromFirebase(mUid, new com.allam.relax.interfaces.OnCompleteListener() {
+
+                            mFirebaseController.getUserFromFirebase(mFirebaseUser.getUid(), new com.allam.relax.controller.interfaces.OnCompleteListener() {
                                 @Override
                                 public void OnComplete(User user, String error) {
-                                    completeLogin.onLoginSuccessfull(user);
+                                    if (user!= null){
+                                        completeLogin.onLoginSuccessfull(user);
+                                    }else{
+                                        User newUser = User.getUser().init(mFirebaseUser);
+                                        mFirebaseController.uploadUserToFirebase(newUser);
+                                        completeLogin.onLoginSuccessfull(newUser);
+                                    }
                                 }
                             });
 
@@ -166,4 +173,32 @@ class FirebaseAuthentication {
                     }
                 });
     }
+
+      /*
+    private void sendVerificationEmail() {
+        Toast.makeText(this, getString(R.string.sending_email_verification), Toast.LENGTH_SHORT).show();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    if (task.isSuccessful()) {
+                        mAuthProgressDialog.dismiss();
+                        Toast.makeText(getBaseContext(),getString(R.string.verification_email_sent) + user.getEmail(),
+                                Toast.LENGTH_SHORT).show();
+                        // start loginActivity after sending verification email
+                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else {
+                        Log.e(LOG_TAG, getString(R.string.verification_email_failed), task.getException());
+                        Toast.makeText(getBaseContext(),
+                                getString(R.string.verification_email_failed),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+*/
 }

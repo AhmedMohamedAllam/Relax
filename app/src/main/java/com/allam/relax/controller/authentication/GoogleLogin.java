@@ -1,11 +1,11 @@
-package com.allam.relax.authentication;
+package com.allam.relax.controller.authentication;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
 import com.allam.relax.R;
-import com.allam.relax.interfaces.OnCompleteLogin;
+import com.allam.relax.controller.interfaces.OnCompleteLogin;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -16,7 +16,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 
 /**
- * Created by Uranus on 16/03/2018.
+ * Relax
+ * Created by Uranus on 16/03/2018 .
  */
 
 public class GoogleLogin {
@@ -38,8 +39,7 @@ public class GoogleLogin {
                 .build();
 
 
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        return signInIntent;
+        return Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
 
     }
 

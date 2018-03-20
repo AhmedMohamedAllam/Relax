@@ -1,9 +1,9 @@
-package com.allam.relax.authentication;
+package com.allam.relax.controller.authentication;
 
 import android.content.Context;
 
 import com.allam.relax.R;
-import com.allam.relax.interfaces.OnCompleteLogin;
+import com.allam.relax.controller.interfaces.OnCompleteLogin;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -12,7 +12,8 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 /**
- * Created by Uranus on 16/03/2018.
+ * Relax
+ * Created by Uranus on 16/03/2018 .
  */
 
 public class FacebookLogin {

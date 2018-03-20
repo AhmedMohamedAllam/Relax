@@ -1,8 +1,8 @@
-package com.allam.relax.authentication;
+package com.allam.relax.controller.authentication;
 
 import android.content.Context;
 
-import com.allam.relax.interfaces.OnCompleteLogin;
+import com.allam.relax.controller.interfaces.OnCompleteLogin;
 import com.allam.relax.model.User;
 
 /**

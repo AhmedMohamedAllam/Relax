@@ -1,15 +1,17 @@
-package com.allam.relax.authentication;
+package com.allam.relax.controller.authentication;
 
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.allam.relax.R;
-import com.allam.relax.interfaces.OnCompleteLogin;
+import com.allam.relax.controller.Validation;
+import com.allam.relax.controller.interfaces.OnCompleteLogin;
 import com.allam.relax.model.User;
 
 /**
- * Created by Uranus on 16/03/2018.
+ * Relax
+ * Created by Uranus on 16/03/2018 .
  */
 
 public class EmailAndPasswordLogin {

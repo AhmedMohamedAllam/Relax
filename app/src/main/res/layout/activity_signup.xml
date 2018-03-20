@@ -5,7 +5,7 @@
     android:background="@drawable/background"
     android:fillViewport="true"
 
-    tools:context=".activity.SignUpActivity">
+    tools:context=".view.activity.SignUpActivity">
 
     <LinearLayout
         android:id="@+id/linear_layout_create_account_activity"
@@ -163,7 +163,8 @@
                 android:text="@string/button_sign_in"
                 android:textColor="#3c5a99"
                 android:textSize="15sp"
-                android:textStyle="bold|italic" />
+                android:textStyle="bold|italic"
+                android:layout_marginStart="5dp" />
 
         </LinearLayout>
     </LinearLayout>

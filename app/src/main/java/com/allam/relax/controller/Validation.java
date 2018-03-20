@@ -1,4 +1,4 @@
-package com.allam.relax.authentication;
+package com.allam.relax.controller;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -8,7 +8,8 @@ import android.widget.EditText;
 import com.allam.relax.R;
 
 /**
- * Created by Uranus on 16/03/2018.
+ * Relax
+ * Created by Uranus on 16/03/2018 .
  */
 
 public class Validation {

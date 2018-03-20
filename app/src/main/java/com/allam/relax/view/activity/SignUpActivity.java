@@ -1,4 +1,4 @@
-package com.allam.relax.activity;
+package com.allam.relax.view.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,15 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.allam.relax.R;
-import com.allam.relax.authentication.EmailAndPasswordSignUp;
-import com.allam.relax.authentication.Validation;
-import com.allam.relax.interfaces.OnCompleteLogin;
+import com.allam.relax.controller.authentication.EmailAndPasswordSignUp;
+import com.allam.relax.controller.Validation;
+import com.allam.relax.controller.interfaces.OnCompleteLogin;
 import com.allam.relax.utiles.Utiles;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import com.allam.relax.model.User;
+
+import static com.allam.relax.model.User.getUser;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -35,7 +37,6 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private TextView mSighnInTextView;
-    private User user;
     private String mUserName, mUserEmail, mPassword, mAddress, mPhone;
     private ProgressDialog mAuthProgressDialog;
     private ImageView mLogoImageView;
@@ -63,7 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
         initializeScreen();
         mEmailAndPasswordSignUp = new EmailAndPasswordSignUp(SignUpActivity.this);
 
-        mLogoImageView = (ImageView) findViewById(R.id.create_account_logo_image);
+        mLogoImageView = findViewById(R.id.create_account_logo_image);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.alpha);
         mLogoImageView.startAnimation(animation);
 
@@ -134,13 +135,13 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     private void initializeScreen() {
-        mSighnInTextView = (TextView) findViewById(R.id.tv_sign_in);
-        mCreateAccountButton = (Button) findViewById(R.id.btn_create_account_final);
-        mEditTextUsernameCreate = (EditText) findViewById(R.id.edit_text_username_create);
-        mEditTextEmailCreate = (EditText) findViewById(R.id.edit_text_email_create);
-        mEditTextPasswordCreate = (EditText) findViewById(R.id.edit_text_password_create);
-        mEditTextAddressCreate = (EditText) findViewById(R.id.edit_text_address_create);
-        mEditTextPhoneCreate = (EditText) findViewById(R.id.edit_phone_create);
+        mSighnInTextView = findViewById(R.id.tv_sign_in);
+        mCreateAccountButton = findViewById(R.id.btn_create_account_final);
+        mEditTextUsernameCreate = findViewById(R.id.edit_text_username_create);
+        mEditTextEmailCreate = findViewById(R.id.edit_text_email_create);
+        mEditTextPasswordCreate = findViewById(R.id.edit_text_password_create);
+        mEditTextAddressCreate = findViewById(R.id.edit_text_address_create);
+        mEditTextPhoneCreate = findViewById(R.id.edit_phone_create);
 
 
         mAuthProgressDialog = new ProgressDialog(this);
@@ -160,37 +161,12 @@ public class SignUpActivity extends AppCompatActivity {
             mPassword = mEditTextPasswordCreate.getText().toString();
             mAddress = mEditTextAddressCreate.getText().toString();
             mPhone = mEditTextPhoneCreate.getText().toString();
-            return new User(mUserName,mUserEmail, mPassword, mAddress, mPhone);
+            return getUser().init(mUserName,mUserEmail, mPassword, mAddress, mPhone);
         } else {
             return null;
         }
     }
-    /*
-    private void sendVerificationEmail() {
-        Toast.makeText(this, getString(R.string.sending_email_verification), Toast.LENGTH_SHORT).show();
-        final FirebaseUser user = mAuth.getCurrentUser();
-        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    if (task.isSuccessful()) {
-                        mAuthProgressDialog.dismiss();
-                        Toast.makeText(getBaseContext(),getString(R.string.verification_email_sent) + user.getEmail(),
-                                Toast.LENGTH_SHORT).show();
-                        // start loginActivity after sending verification email
-                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    } else {
-                        Log.e(LOG_TAG, getString(R.string.verification_email_failed), task.getException());
-                        Toast.makeText(getBaseContext(),
-                                getString(R.string.verification_email_failed),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-    }
-*/
+
+
 
 }

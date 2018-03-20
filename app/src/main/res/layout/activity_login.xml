@@ -1,11 +1,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:fillViewport="true"
-    tools:context=".activity.LoginActivity">
+    tools:context=".view.activity.LoginActivity">
 
     <LinearLayout
         android:id="@+id/linear_layout_login_activity"
@@ -120,7 +119,8 @@
                 android:text="@string/button_create_account"
                 android:textColor="#3c5a99"
                 android:textSize="15sp"
-                android:textStyle="bold|italic" />
+                android:textStyle="bold|italic"
+                android:layout_marginStart="5dp" />
 
         </LinearLayout>
     </LinearLayout>

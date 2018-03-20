@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".view.activity.LoginActivity"
             android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SignUpActivity"
+            android:name=".view.activity.SignUpActivity"
             android:theme="@style/Theme.Design.NoActionBar" />
 
         <!-- facebook -->
@@ -45,7 +45,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.HomeActivity"></activity>
+        <activity android:name=".view.activity.HomeActivity"/>
     </application>
 
 </manifest>

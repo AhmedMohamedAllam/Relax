@@ -64,5 +64,13 @@
     <string name="logged_in_successfully">Logged in successfully</string>
     <string name="error_saving_user">Error saving user, try again later!</string>
 
+    <!-- nav drawer -->
+    <string name="profile">Profile</string>
+    <string name="my_orders">My orders</string>
+    <string name="facebook">Facebook</string>
+    <string name="google_play">Google play</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="call_us">Call us</string>
+
 
 </resources>
