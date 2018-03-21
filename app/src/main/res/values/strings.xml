@@ -71,6 +71,9 @@
     <string name="google_play">Google play</string>
     <string name="whatsapp">WhatsApp</string>
     <string name="call_us">Call us</string>
+    <string name="title_activity_order">OrderActivity</string>
 
 
+    <!-- Order -->
+    <string name="submit_order">Submit</string>
 </resources>

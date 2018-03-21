@@ -1,11 +1,13 @@
 package com.allam.relax.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
 import com.allam.relax.R;
+import com.allam.relax.view.activity.OrderActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -44,6 +46,7 @@ public class NavigationDrawer {
                 return false;
             }
         });
+
         return drawerProfile;
     }
 
@@ -92,6 +95,8 @@ public class NavigationDrawer {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         // do something with the clicked item :D
+                        Intent intent = new Intent(activity, OrderActivity.class);
+                        activity.startActivity(intent);
                         Toast.makeText(activity, drawerItem.getIdentifier() + "", Toast.LENGTH_SHORT).show();
                         return false;
                     }
