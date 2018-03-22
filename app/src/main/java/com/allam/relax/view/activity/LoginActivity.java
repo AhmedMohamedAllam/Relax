@@ -96,11 +96,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 mFirebaseUser = firebaseAuth.getCurrentUser();
                 if (mFirebaseUser != null) {
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, OrderActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); // don't return to previous activity
-
                     startActivity(intent);
-                    Utiles.showToast(LoginActivity.this, getString(R.string.logged_in_successfully));
                 }
             }
         };

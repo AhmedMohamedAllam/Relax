@@ -7,7 +7,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.allam.relax.R;
+import com.allam.relax.view.activity.HomeActivity;
+import com.allam.relax.view.activity.LoginActivity;
 import com.allam.relax.view.activity.OrderActivity;
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -27,12 +30,15 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
  */
 
 public class NavigationDrawer {
-    private static long profileID = 1;
-    private static long ordersID = 2;
-    private static long facebookID = 3;
-    private static long whatsappID = 4;
-    private static long callID = 5;
-    private static long googlePlayID = 6;
+    public static final int NONE = -1;
+    public static final int profileID = 1;
+    public static final int myOrdersID = 2;
+    public static final int signOutID = 3;
+    public static final int facebookID = 4;
+    public static final int whatsappID = 5;
+    public static final int callID = 6;
+    public static final int googlePlayID = 7;
+    public static final int newOrderID = 8;
 
     private static ProfileDrawerItem getCurrentProfile(final Activity activity) {
         FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -50,11 +56,13 @@ public class NavigationDrawer {
         return drawerProfile;
     }
 
-    public static void getDrawer(final Activity activity, Toolbar toolbar) {
+    public static void getDrawer(final Activity activity, Toolbar toolbar, int selectedID) {
 
         //if you want to update the items at a later time it is recommended to keep it in a variable
         PrimaryDrawerItem profile = new PrimaryDrawerItem().withIdentifier(profileID).withName(R.string.profile).withIcon(R.drawable.profile_icon);
-        PrimaryDrawerItem myOrders = new PrimaryDrawerItem().withIdentifier(ordersID).withName(R.string.my_orders).withIcon(R.drawable.orders_icon);
+        PrimaryDrawerItem newOrder = new PrimaryDrawerItem().withIdentifier(newOrderID).withName(R.string.new_order).withIcon(R.drawable.add_icon);
+        PrimaryDrawerItem myOrders = new PrimaryDrawerItem().withIdentifier(myOrdersID).withName(R.string.my_orders).withIcon(R.drawable.orders_icon);
+        PrimaryDrawerItem signOut = new PrimaryDrawerItem().withIdentifier(signOutID).withName(R.string.sign_out).withIcon(R.drawable.signout_icon);
 
 
         SecondaryDrawerItem facebookItem = new SecondaryDrawerItem().withIdentifier(facebookID).withName(R.string.facebook).withIcon(R.drawable.facebook_icon);
@@ -80,25 +88,50 @@ public class NavigationDrawer {
         Drawer result = new DrawerBuilder()
                 .withActivity(activity)
                 .withToolbar(toolbar)
-                .addDrawerItems(
-                        profile,
-                        myOrders,
+                .addDrawerItems(profile, newOrder, myOrders, signOut,
                         new SectionDrawerItem().withName("Contact us"),
-                        facebookItem,
-                        whtsappItem,
-                        callUsItem,
+                        facebookItem, whtsappItem, callUsItem,
                         new SectionDrawerItem().withName("Rate us"),
                         googlePlayItem
-                        )
+                )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
-                        Intent intent = new Intent(activity, OrderActivity.class);
-                        activity.startActivity(intent);
-                        Toast.makeText(activity, drawerItem.getIdentifier() + "", Toast.LENGTH_SHORT).show();
-                        return false;
+                        int identifier = (int) drawerItem.getIdentifier();
+                        switch (identifier) {
+                            case profileID:
+                                onProfileClick();
+                                Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
+                                return true;
+                            case newOrderID:
+                                onNewOrderClick(activity);
+                                return true;
+                            case myOrdersID:
+                                onMyOrdersClick();
+                                Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
+                                return true;
+                            case signOutID:
+                                onSignOutClick(activity);
+                                return true;
+                            case facebookID:
+                                onFacebookClick();
+                                Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
+                                return true;
+                            case whatsappID:
+                                onWhatsAppClick();
+                                Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
+                                return true;
+                            case callID:
+                                onCallUsClick();
+                                Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
+                                return true;
+                            case googlePlayID:
+                                onGooglePlayClick();
+                                Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
+                                return true;
+                            default:
+                                return false;
+                        }
                     }
                 })
                 .withAccountHeader(headerResult)
@@ -106,8 +139,43 @@ public class NavigationDrawer {
                 .withActionBarDrawerToggleAnimated(true)
                 .withTranslucentStatusBar(true)
                 .withDisplayBelowStatusBar(true)
-                .withSelectedItem(-1)
+                .withSelectedItem(selectedID)
                 .build();
+    }
+
+    private static void onProfileClick() {
+
+    }
+
+    private static void onNewOrderClick(Activity activity) {
+        Intent intent = new Intent(activity, OrderActivity.class);
+        activity.startActivity(intent);
+    }
+
+    private static void onMyOrdersClick() {
+    }
+
+    private static void onSignOutClick(Activity activity) {
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut(); //facebook Logout
+        Intent intent = new Intent(activity, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+    }
+
+    private static void onFacebookClick() {
+
+    }
+
+    private static void onWhatsAppClick() {
+
+    }
+
+    private static void onCallUsClick() {
+
+    }
+
+    private static void onGooglePlayClick() {
 
     }
 }

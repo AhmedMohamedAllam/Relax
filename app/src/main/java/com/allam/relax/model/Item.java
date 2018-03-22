@@ -1,24 +1,25 @@
 package com.allam.relax.model;
 
+import java.io.Serializable;
+
 /**
  * Relax
  * Created by Uranus on 21/03/2018 .
  */
 
-public class Item {
+public class Item implements Serializable {
     private String mItemId;
     private String mName;
-    private String mCount;
+    private String mQuantity;
     private String mPrice;
-    private String mLocation;
+    private String mMarket;
     private String mNote;
 
-    public Item(String itemId, String name, String count, String price, String location, String note) {
-        mItemId = itemId;
+    public Item( String name, String count, String price, String location, String note) {
         mName = name;
-        mCount = count;
+        mQuantity = count;
         mPrice = price;
-        mLocation = location;
+        mMarket = location;
         mNote = note;
     }
 
@@ -42,12 +43,12 @@ public class Item {
         mName = name;
     }
 
-    public String getCount() {
-        return mCount;
+    public String getQuantity() {
+        return mQuantity;
     }
 
-    public void setCount(String count) {
-        mCount = count;
+    public void setQuantity(String quantity) {
+        mQuantity = quantity;
     }
 
     public String getPrice() {
@@ -58,12 +59,12 @@ public class Item {
         mPrice = price;
     }
 
-    public String getLocation() {
-        return mLocation;
+    public String getMarket() {
+        return mMarket;
     }
 
-    public void setLocation(String location) {
-        mLocation = location;
+    public void setMarket(String market) {
+        mMarket = market;
     }
 
     public String getNote() {

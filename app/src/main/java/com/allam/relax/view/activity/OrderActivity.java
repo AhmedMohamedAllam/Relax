@@ -2,78 +2,96 @@ package com.allam.relax.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.allam.relax.R;
+import com.allam.relax.controller.interfaces.OnCompleteListener;
 import com.allam.relax.model.Item;
-import com.allam.relax.view.CreateItemDialog;
+import com.allam.relax.view.ItemDetailDialog;
 import com.allam.relax.view.NavigationDrawer;
 
 import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
 
-    private ArrayList<Item> mOrderItems;
-    private RecyclerView mRecyclerView;
+    private ArrayList<Item> mOrderItems = new ArrayList<>();
+    private OrderAdapter mOrderAdapter;
+    private static boolean isEditingItem = false;
+    private OnCompleteListener<Item> mItemDialogCompleteListener;
+    private static int mSelectedItemIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.order_activity);
         setSupportActionBar(toolbar);
 
-        NavigationDrawer.getDrawer(this, toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        NavigationDrawer.getDrawer(this, toolbar, NavigationDrawer.newOrderID);
+
         // test recyclerview
-        mOrderItems = getTestData();
-        mRecyclerView = findViewById(R.id.orders_recyclerview);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        mRecyclerView.setAdapter(new OrderAdapter(mOrderItems));
-        fab.setOnClickListener(new View.OnClickListener() {
+        RecyclerView recyclerView = findViewById(R.id.orders_recyclerview);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        mOrderAdapter = new OrderAdapter(mOrderItems);
+        recyclerView.setAdapter(mOrderAdapter);
+
+        mItemDialogCompleteListener = new OnCompleteListener<Item>() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void OnComplete(Item obj, String error) {
+               if (isEditingItem){
+                   mOrderItems.remove(mSelectedItemIndex);
+                   mOrderItems.add(mSelectedItemIndex,obj);
+                   isEditingItem = false;
+               }else{
+                   mOrderItems.add(obj);
+               }
+                mOrderAdapter.notifyDataSetChanged();
             }
-        });
+        };
     }
 
 
     private class OrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mItemNameTextView;
         private Item mCurrentItem;
-        public OrderHolder(View itemView) {
+        private int mPosition;
+
+        OrderHolder(View itemView) {
             super(itemView);
             mItemNameTextView = itemView.findViewById(android.R.id.text1);
             mItemNameTextView.setOnClickListener(this);
         }
 
-        public void onBindView(Item item){
+        void onBindView(Item item, int position){
             mItemNameTextView.setText(item.getName());
             mCurrentItem = item;
+            mPosition = position;
         }
 
         @Override
         public void onClick(View view) {
-            CreateItemDialog dialog = new CreateItemDialog();
-            dialog.show(getFragmentManager(), "");
+            mSelectedItemIndex = mPosition;
+            isEditingItem = true;
+            ItemDetailDialog itemDetailDialog = ItemDetailDialog.getInstance(mCurrentItem);
+            itemDetailDialog.mCompleteListener = mItemDialogCompleteListener;
+            itemDetailDialog.show(getFragmentManager(),null);
         }
     }
 
     private class OrderAdapter extends RecyclerView.Adapter<OrderHolder> {
         private ArrayList<Item> mItems;
-        public OrderAdapter(ArrayList<Item> items) {
+        OrderAdapter(ArrayList<Item> items) {
             mItems = items;
         }
 
@@ -87,7 +105,7 @@ public class OrderActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull OrderHolder holder, int position) {
-            holder.onBindView(mItems.get(position));
+            holder.onBindView(mItems.get(position), position);
         }
 
         @Override
@@ -96,14 +114,26 @@ public class OrderActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.new_order_menu, menu);
 
-    private ArrayList<Item> getTestData(){
-        ArrayList<Item> items = new ArrayList<>();
-        Item item = new Item();
-        for (int i = 0; i< 10; i++){
-            item.setName("item " + i);
-            items.add(item);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_order_menu_button: {
+                isEditingItem = false;
+                ItemDetailDialog dialog = new ItemDetailDialog();
+                dialog.mCompleteListener = mItemDialogCompleteListener;
+                dialog.show(getFragmentManager(), "");
+            }
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return items;
+
     }
 }

@@ -66,7 +66,9 @@
 
     <!-- nav drawer -->
     <string name="profile">Profile</string>
+    <string name="new_order">New order</string>
     <string name="my_orders">My orders</string>
+    <string name="sign_out">Sign out</string>
     <string name="facebook">Facebook</string>
     <string name="google_play">Google play</string>
     <string name="whatsapp">WhatsApp</string>
@@ -85,6 +87,14 @@
     <string name="market_or_location">Market -or- Location</string>
     <string name="notes">Notes</string>
     <string name="done">Done</string>
+    <string name="add_new_item">Add new item</string>
     <string name="cancel">Cancel</string>
+
+    <!--dynamic strings-->
+    <string name="add_item_successfully">Item %1$s added successfully.</string>
+
+    <!-- activity names-->
+    <string name="order_activity">New Order</string>
+
 
 </resources>

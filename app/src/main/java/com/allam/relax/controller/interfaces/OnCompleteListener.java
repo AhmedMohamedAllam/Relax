@@ -2,6 +2,8 @@ package com.allam.relax.controller.interfaces;
 
 import com.allam.relax.model.User;
 
-public interface OnCompleteListener {
-    void OnComplete(User user, String error);
+import java.io.Serializable;
+
+public interface OnCompleteListener<T> extends Serializable{
+    void OnComplete(T obj, String error);
 }

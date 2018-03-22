@@ -57,7 +57,7 @@ class FirebaseAuthentication {
                     }else{
                         return;
                     }
-                    mFirebaseController.getUserFromFirebase(mUid, new com.allam.relax.controller.interfaces.OnCompleteListener() {
+                    mFirebaseController.getUserFromFirebase(mUid, new com.allam.relax.controller.interfaces.OnCompleteListener<User>() {
                         @Override
                         public void OnComplete(User user, String error) {
                                 completeLogin.onLoginSuccessfull(user);
@@ -83,7 +83,7 @@ class FirebaseAuthentication {
                     }else{
                         return;
                     }
-                    mFirebaseController.getUserFromFirebase(mFirebaseUser.getUid(), new com.allam.relax.controller.interfaces.OnCompleteListener() {
+                    mFirebaseController.getUserFromFirebase(mFirebaseUser.getUid(), new com.allam.relax.controller.interfaces.OnCompleteListener<User>() {
                         @Override
                         public void OnComplete(User user, String error) {
                             if (user!= null){
@@ -115,7 +115,7 @@ class FirebaseAuthentication {
                 if (task.isSuccessful()) {
                     completeLogin.onLoginSuccessfull(user); //inform that log in operation is successfull
                     user.setUid( mAuth.getCurrentUser().getUid());
-                    mFirebaseController.uploadUserToFirebase(user, new com.allam.relax.controller.interfaces.OnCompleteListener() {
+                    mFirebaseController.uploadUserToFirebase(user, new com.allam.relax.controller.interfaces.OnCompleteListener<User>() {
                         @Override
                         public void OnComplete(User user, String error) {
                             if (error != null){
@@ -149,7 +149,7 @@ class FirebaseAuthentication {
                                 return;
                             }
 
-                            mFirebaseController.getUserFromFirebase(mFirebaseUser.getUid(), new com.allam.relax.controller.interfaces.OnCompleteListener() {
+                            mFirebaseController.getUserFromFirebase(mFirebaseUser.getUid(), new com.allam.relax.controller.interfaces.OnCompleteListener<User>() {
                                 @Override
                                 public void OnComplete(User user, String error) {
                                     if (user!= null){

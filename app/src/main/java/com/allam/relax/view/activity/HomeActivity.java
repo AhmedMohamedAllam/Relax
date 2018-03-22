@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        NavigationDrawer.getDrawer(this, toolbar);
+        NavigationDrawer.getDrawer(this, toolbar, NavigationDrawer.NONE);
     }
 
 
