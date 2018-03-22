@@ -74,6 +74,17 @@
     <string name="title_activity_order">OrderActivity</string>
 
 
-    <!-- Order -->
+    <!-- order -->
     <string name="submit_order">Submit</string>
+    <string name="new_item">New item</string>
+
+    <!-- order dialog hints -->
+    <string name="name">Name</string>
+    <string name="quantity">Quantity</string>
+    <string name="exp_price">Expected price</string>
+    <string name="market_or_location">Market -or- Location</string>
+    <string name="notes">Notes</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+
 </resources>
