@@ -1,7 +1,9 @@
 package com.allam.relax.view;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
@@ -9,6 +11,7 @@ import android.widget.Toast;
 import com.allam.relax.R;
 import com.allam.relax.view.activity.HomeActivity;
 import com.allam.relax.view.activity.LoginActivity;
+import com.allam.relax.view.activity.MyOrdersActivity;
 import com.allam.relax.view.activity.OrderActivity;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,7 +65,7 @@ public class NavigationDrawer {
         PrimaryDrawerItem profile = new PrimaryDrawerItem().withIdentifier(profileID).withName(R.string.profile).withIcon(R.drawable.profile_icon);
         PrimaryDrawerItem newOrder = new PrimaryDrawerItem().withIdentifier(newOrderID).withName(R.string.new_order).withIcon(R.drawable.add_icon);
         PrimaryDrawerItem myOrders = new PrimaryDrawerItem().withIdentifier(myOrdersID).withName(R.string.my_orders).withIcon(R.drawable.orders_icon);
-        PrimaryDrawerItem signOut = new PrimaryDrawerItem().withIdentifier(signOutID).withName(R.string.sign_out).withIcon(R.drawable.signout_icon);
+        PrimaryDrawerItem signOut = new PrimaryDrawerItem().withIdentifier(signOutID).withName(R.string.sign_out).withIcon(R.drawable.signout_icon).withSelectable(false);
 
 
         SecondaryDrawerItem facebookItem = new SecondaryDrawerItem().withIdentifier(facebookID).withName(R.string.facebook).withIcon(R.drawable.facebook_icon);
@@ -102,35 +105,34 @@ public class NavigationDrawer {
                             case profileID:
                                 onProfileClick();
                                 Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
-                                return true;
+                                return false;
                             case newOrderID:
                                 onNewOrderClick(activity);
-                                return true;
+                                return false;
                             case myOrdersID:
-                                onMyOrdersClick();
-                                Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
-                                return true;
+                                onMyOrdersClick(activity);
+                                return false;
                             case signOutID:
                                 onSignOutClick(activity);
-                                return true;
+                                return false;
                             case facebookID:
                                 onFacebookClick();
                                 Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
-                                return true;
+                                return false;
                             case whatsappID:
                                 onWhatsAppClick();
                                 Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
-                                return true;
+                                return false;
                             case callID:
                                 onCallUsClick();
                                 Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
-                                return true;
+                                return false;
                             case googlePlayID:
                                 onGooglePlayClick();
                                 Toast.makeText(activity, "Soon!", Toast.LENGTH_SHORT).show();
-                                return true;
-                            default:
                                 return false;
+                            default:
+                                return true;
                         }
                     }
                 })
@@ -148,19 +150,41 @@ public class NavigationDrawer {
     }
 
     private static void onNewOrderClick(Activity activity) {
-        Intent intent = new Intent(activity, OrderActivity.class);
-        activity.startActivity(intent);
+        if (activity.getClass() != OrderActivity.class) {
+            Intent intent = new Intent(activity, OrderActivity.class);
+            activity.startActivity(intent);
+        }
     }
 
-    private static void onMyOrdersClick() {
+    private static void onMyOrdersClick(Activity activity) {
+        if (activity.getClass() != MyOrdersActivity.class){
+            Intent intent = new Intent(activity, MyOrdersActivity.class);
+            activity.startActivity(intent);
+        }
     }
 
-    private static void onSignOutClick(Activity activity) {
-        FirebaseAuth.getInstance().signOut();
-        LoginManager.getInstance().logOut(); //facebook Logout
-        Intent intent = new Intent(activity, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
+    private static void onSignOutClick(final Activity activity) {
+        AlertDialog alertDialog = new AlertDialog.Builder(activity).setTitle(R.string.sign_out)
+                .setIcon(R.drawable.signout_icon)
+                .setMessage(R.string.signout_caution)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // do signout operations
+                        FirebaseAuth.getInstance().signOut();
+                        LoginManager.getInstance().logOut(); //facebook Logout
+                        Intent intent = new Intent(activity, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        activity.startActivity(intent);
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).show();
+
     }
 
     private static void onFacebookClick() {

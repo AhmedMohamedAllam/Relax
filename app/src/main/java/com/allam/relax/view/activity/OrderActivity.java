@@ -12,11 +12,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.allam.relax.R;
+import com.allam.relax.controller.FirebaseOrderController;
 import com.allam.relax.controller.interfaces.OnCompleteListener;
 import com.allam.relax.model.Item;
+import com.allam.relax.model.Order;
 import com.allam.relax.view.ItemDetailDialog;
 import com.allam.relax.view.NavigationDrawer;
 
@@ -29,6 +33,7 @@ public class OrderActivity extends AppCompatActivity {
     private static boolean isEditingItem = false;
     private OnCompleteListener<Item> mItemDialogCompleteListener;
     private static int mSelectedItemIndex;
+    private FirebaseOrderController mOrderController = new FirebaseOrderController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,8 @@ public class OrderActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.order_activity);
         setSupportActionBar(toolbar);
 
+        Button submitButton = findViewById(R.id.submit_order_button);
+
         NavigationDrawer.getDrawer(this, toolbar, NavigationDrawer.newOrderID);
 
         // test recyclerview
@@ -45,6 +52,7 @@ public class OrderActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         mOrderAdapter = new OrderAdapter(mOrderItems);
         recyclerView.setAdapter(mOrderAdapter);
+
 
         mItemDialogCompleteListener = new OnCompleteListener<Item>() {
             @Override
@@ -59,6 +67,27 @@ public class OrderActivity extends AppCompatActivity {
                 mOrderAdapter.notifyDataSetChanged();
             }
         };
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOrderItems.isEmpty()){
+                    Toast.makeText(OrderActivity.this, R.string.add_item_first, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Order currentOrder = new Order(mOrderItems);
+                mOrderController.uploadOrderToFirebase(currentOrder, new OnCompleteListener<Order>() {
+                    @Override
+                    public void OnComplete(Order obj, String error) {
+                        if(error != null){
+                            Toast.makeText(OrderActivity.this,error , Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(OrderActivity.this,"order added successfully" , Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
     }
 
 

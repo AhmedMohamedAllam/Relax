@@ -49,7 +49,8 @@
         <activity
             android:name=".view.activity.OrderActivity"
             android:label="@string/title_activity_order"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".view.activity.MyOrdersActivity"></activity>
     </application>
 
 </manifest>

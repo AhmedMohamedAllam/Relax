@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.allam.relax.R;
-import com.allam.relax.controller.FirebaseController;
+import com.allam.relax.controller.FirebaseUserController;
 import com.allam.relax.controller.interfaces.OnCompleteLogin;
 import com.allam.relax.model.User;
 import com.allam.relax.utiles.Utiles;
@@ -32,12 +32,12 @@ class FirebaseAuthentication {
     private FirebaseUser mFirebaseUser;
     private Context mContext;
     private ProgressDialog mProgressDialog;
-    private FirebaseController mFirebaseController;
+    private FirebaseUserController mFirebaseController;
 
     FirebaseAuthentication(Context mContext) {
         this.mContext = mContext;
         this.mAuth = FirebaseAuth.getInstance();
-        mFirebaseController = new FirebaseController();
+        mFirebaseController = new FirebaseUserController();
 
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setTitle(mContext.getString(R.string.progress_dialog_loading));

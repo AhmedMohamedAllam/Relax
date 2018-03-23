@@ -13,15 +13,15 @@ import com.google.firebase.database.ValueEventListener;
  * Created by Uranus on 18/03/2018 .
  */
 
-public class FirebaseController {
+public class FirebaseUserController {
     private DatabaseReference mUsersReference;
 
-    public FirebaseController() {
+    public FirebaseUserController() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mUsersReference = database.getReference("users");
     }
 
-    public void getUserFromFirebase(String uid, final OnCompleteListener completeListener){
+    public void getUserFromFirebase(String uid, final OnCompleteListener<User> completeListener){
         DatabaseReference userRef = mUsersReference.child(uid);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -37,7 +37,7 @@ public class FirebaseController {
         });
     }
 
-    public void uploadUserToFirebase(final User user, final OnCompleteListener completeListener){
+    public void uploadUserToFirebase(final User user, final OnCompleteListener<User> completeListener){
         if(user.getUid() == null){
             completeListener.OnComplete(null, "Error saving user, try again later!");
             return;

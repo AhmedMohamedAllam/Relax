@@ -79,6 +79,8 @@
     <!-- order -->
     <string name="submit_order">Submit</string>
     <string name="new_item">New item</string>
+    <string name="add_item_first">Add one item at least!</string>
+
 
     <!-- order dialog hints -->
     <string name="name">Name</string>
@@ -90,11 +92,18 @@
     <string name="add_new_item">Add new item</string>
     <string name="cancel">Cancel</string>
 
+
     <!--dynamic strings-->
     <string name="add_item_successfully">Item %1$s added successfully.</string>
 
     <!-- activity names-->
     <string name="order_activity">New Order</string>
+    <string name="myorders_activity">My orders</string>
+
+    <!--  -->
+    <string name="signout_caution">Are you sure you want to sign out?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
 
 
 </resources>
